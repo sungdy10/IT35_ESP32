@@ -3,17 +3,17 @@ header('Content-Type: application/json; charset=utf-8');
 
 $file = __DIR__ . '/data.json';
 
-// Only the fields the ESP32 (DHT11, Raindrop, PIR) actually sends.
+// Only the fields the ESP32 (DHT11, LM393, PIR) actually sends.
 // Anything else (e.g. old distance/light/sonar fields) is dropped.
 $allowedFields = [
     'system_ok',
     'missing',
     'temperature',
     'humidity',
-    'rain_status',
+    'light',
     'motion',
     'dht_ok',
-    'rain_ok',
+    'light_ok',
     'pir_ok',
 ];
 

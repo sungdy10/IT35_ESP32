@@ -83,7 +83,7 @@
         .icon-box { width: 40px; height: 40px; border-radius: 10px; display: grid; place-items: center; flex: 0 0 auto; }
         .icon-box.green { background: var(--green-soft); color: var(--green); }
         .icon-box.blue { background: var(--blue-soft); color: var(--blue); }
-        .icon-box.amber { background: var(--amber-soft); color: var(--amber); }
+        .icon-box.amber, .icon-box.sun { background: var(--amber-soft); color: var(--amber); }
         .card-title strong { display: block; font-size: 16px; font-weight: 800; letter-spacing: -.01em; }
         .card-title span.sub { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
         .chip { font-size: 11px; font-weight: 800; letter-spacing: .06em; padding: 5px 10px; border: 1.5px solid var(--line-strong); border-radius: 6px; white-space: nowrap; }
@@ -105,9 +105,9 @@
             border: 2px solid var(--line-strong);
             transition: background .25s, color .25s;
         }
-        .state-badge.rain { background: var(--blue-soft); color: var(--blue); }
-        .state-badge.dry { background: var(--green-soft); color: var(--green); }
-        .state-badge.motion { background: var(--amber-soft); color: var(--amber); }
+        .state-badge.light { background: var(--amber-soft); color: var(--amber); }
+        .state-badge.dark { background: #dcdfe8; color: #3b4263; }
+        .state-badge.motion { background: var(--blue-soft); color: var(--blue); }
         .state-badge.still { background: var(--grey-soft); color: var(--muted); }
         .state-note { margin: 14px 0 0; padding-top: 14px; border-top: 1.5px dashed var(--line); font-size: 12px; color: var(--muted); }
 
@@ -182,7 +182,7 @@
 
     <main class="wrap">
         <h1 class="page-title">Sensor overview</h1>
-        <p class="page-sub">Live readings from the ESP32.</p>
+        <p class="page-sub">Live readings from the ESP32: temperature, humidity, light and motion.</p>
 
         <div id="warning-banner" class="warning" role="alert">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.6 2.2 17.5A2 2 0 0 0 4 20.5h16a2 2 0 0 0 1.8-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
@@ -222,22 +222,22 @@
                     </div>
                 </article>
 
-                <article class="card" aria-label="Raindrop sensor">
+                <article class="card" aria-label="LM393 light sensor">
                     <div class="card-head">
                         <div class="card-title">
-                            <span class="icon-box blue" aria-hidden="true">
-                                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 15a4 4 0 0 0-2.8-6.8A6 6 0 0 0 5.5 10 4 4 0 0 0 6 18h2"/><path d="m11 17-1 3M16 17l-1 3"/></svg>
+                            <span class="icon-box sun" aria-hidden="true">
+                                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg>
                             </span>
-                            <div><strong>Rain detection</strong><span class="sub">Raindrop module</span></div>
+                            <div><strong>Light detection</strong><span class="sub">Ambient light state</span></div>
                         </div>
                     </div>
                     <div class="state-box">
-                        <div class="state-badge" id="rain-badge" aria-hidden="true">
-                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.2 6 10.5a6 6 0 0 1-12 0C6 9.2 12 3 12 3Z"/></svg>
+                        <div class="state-badge" id="light-badge" aria-hidden="true">
+                            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg>
                         </div>
                         <div>
                             <span class="label">Current state</span>
-                            <div class="big" id="v-rain" style="font-size:clamp(28px,4vw,40px)">--</div>
+                            <div class="big" id="v-light" style="font-size:clamp(28px,4vw,40px)">--</div>
                         </div>
                     </div>
                     <p class="state-note">Digital sensor output</p>
@@ -246,7 +246,7 @@
                 <article class="card" aria-label="PIR motion sensor">
                     <div class="card-head">
                         <div class="card-title">
-                            <span class="icon-box amber" aria-hidden="true">
+                            <span class="icon-box blue" aria-hidden="true">
                                 <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M7.7 7.7a6 6 0 0 0 0 8.6M16.3 7.7a6 6 0 0 1 0 8.6M4.9 4.9a10 10 0 0 0 0 14.2M19.1 4.9a10 10 0 0 1 0 14.2"/></svg>
                             </span>
                             <div><strong>Motion</strong><span class="sub">PIR sensor</span></div>
@@ -274,10 +274,10 @@
 
         <section class="health" aria-label="Sensor connection health">
             <div class="section-head"><h2>Module health</h2></div>
-            <p class="health-note">ESP32-reported sensor status. Digital sensors (Raindrop, PIR) cannot confirm physical presence.</p>
+            <p class="health-note">ESP32-reported sensor status. Digital sensors (LM393, PIR) cannot confirm physical presence.</p>
             <div class="health-row" id="sensor-status-row">
                 <span id="s-dht"></span>
-                <span id="s-rain"></span>
+                <span id="s-light"></span>
                 <span id="s-pir"></span>
             </div>
             <p id="health-waiting" class="health-note" style="margin:0;">Awaiting sensor diagnostics...</p>
@@ -297,7 +297,7 @@
         const READING_FIELDS = {
             temperature: ['v-temp', ' °C'],
             humidity: ['v-hum', ' %'],
-            rain_status: ['v-rain', ''],
+            light: ['v-light', ''],
             motion: ['v-motion', '']
         };
 
@@ -344,7 +344,7 @@
         function showSensorStates(data, fresh) {
             const sensors = [
                 ['s-dht', 'DHT11', data.dht_ok],
-                ['s-rain', 'Raindrop', data.rain_ok],
+                ['s-light', 'LM393', data.light_ok],
                 ['s-pir', 'PIR', data.pir_ok]
             ];
             for (const [id, label, ok] of sensors) setSensorBadge(id, label, sensorState(ok, fresh));
@@ -365,8 +365,8 @@
         function updateVisualization(data) {
             setMeter('temp-bar', 'temp-track', data.temperature, 50, 'degrees Celsius');
             setMeter('humidity-bar', 'humidity-track', data.humidity, 100, 'percent');
-            document.getElementById('rain-badge').className =
-                'state-badge ' + (data.rain_status === 'Raining' ? 'rain' : data.rain_status === 'Dry' ? 'dry' : '');
+            document.getElementById('light-badge').className =
+                'state-badge ' + (data.light === 'Light' ? 'light' : data.light === 'Dark' ? 'dark' : '');
             document.getElementById('motion-badge').className =
                 'state-badge ' + (data.motion === 'Detected' ? 'motion' : data.motion === 'None' ? 'still' : '');
         }
