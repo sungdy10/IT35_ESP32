@@ -182,7 +182,7 @@
 
     <main class="wrap">
         <h1 class="page-title">Sensor overview</h1>
-        <p class="page-sub">Live readings from the ESP32: temperature, humidity, rain and motion.</p>
+        <p class="page-sub">Live readings from the ESP32.</p>
 
         <div id="warning-banner" class="warning" role="alert">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.6 2.2 17.5A2 2 0 0 0 4 20.5h16a2 2 0 0 0 1.8-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
